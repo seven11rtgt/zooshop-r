@@ -2,12 +2,12 @@ import { useEffect, useState } from 'react'
 import axios from 'axios'
 import { Route, Routes } from 'react-router-dom'
 import './App.css';
-import Header from './Components/header/Header'
-import PromoSection from './Components/promoSection/PromoSection'
-import Footer from './Components/footer/Footer'
-import AboutUs from './Components/aboutUs/AboutUs'
-import Products from './Components/products/Products'
 import Cart from './Components/cart/Cart'
+import Header from './Components/header/Header'
+import Home from './Components/Home'
+import Footer from './Components/footer/Footer'
+import Favourites from './Components/favourites/Favourites'
+
 
 
 function App() {
@@ -54,23 +54,32 @@ function App() {
           /> 
         : null }
 
-      {/* <Routes>
-        <Route path='/favourites' />
-        <Route path='/test/:number' />
-      </Routes > */}
-      
       <Header openCart={ () => setCartOpened(true) } />
-      <Products 
-        products={ products }
-        cartItems={ cartItems }
-        setCartItems={ setCartItems }
-        search={ search }
-        setSearch={ setSearch }
-        favItems={ favItems }
-        setFavItems= { setFavItems }
-      />
-      <PromoSection />
-      <AboutUs />
+
+      <Routes>
+        <Route path='/favourites' element={
+          <Favourites 
+            favItems={ favItems }
+            setFavItems={ setFavItems }
+            cartItems={ cartItems }
+            setCartItems={ setCartItems }
+          />
+        } />
+
+        <Route path='/' element={
+          <Home 
+            products={ products }
+            cartItems={ cartItems }
+            setCartItems={ setCartItems }
+            search={ search }
+            setSearch={ setSearch }
+            favItems={ favItems }
+            setFavItems= { setFavItems }
+          />
+        } />
+
+      </Routes>
+      
       <Footer />
     </div>
   );

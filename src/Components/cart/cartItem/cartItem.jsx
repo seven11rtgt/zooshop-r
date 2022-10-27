@@ -4,7 +4,7 @@ import style from './cartItem.module.css'
 const CartItem = (props) => {
     const onRemoveCartItem = (id) => {
         // удаляем товар по id на фронте
-        props.setCartItems(currentItems => currentItems.filter(item => item.id !== id))
+        props.setCartItems(currentItems => currentItems.filter(item => Number(item.id) !== Number(id)))
         // удаляем товар по id на бэке
         axios.delete(`https://6354294be64783fa82807083.mockapi.io/cart/${id}`)
     }
