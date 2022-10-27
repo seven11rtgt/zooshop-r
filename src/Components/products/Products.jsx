@@ -1,11 +1,18 @@
+import axios from 'axios'
 import SearchBlock from '../searchBlock/searchBlock'
 import Card from './card/Card'
 import style from './products.module.css'
 
 const Products = (props) => {
 
-    const onAddToCart = (obj) => {
-      props.setCartProducts([...props.cartProducts, obj])
+    const onAddToCart = (objCart) => {
+      axios.post('https://6354294be64783fa82807083.mockapi.io/cart', objCart)
+      props.setCartItems([...props.cartItems, objCart])
+    }
+
+    const onAddFavProducts = (objFav) => {
+      axios.post('https://6354294be64783fa82807083.mockapi.io/favourites', objFav)
+      props.setFavItems([...props.favItems, objFav])
     }
 
     const onSearchInput = (e) => {
@@ -40,6 +47,7 @@ const Products = (props) => {
                         () => alert(`Вы добавили товар "${item.title}" в избранное`)
                       } */
                       onPlus = { cartObj => onAddToCart(cartObj) }
+                      onFav = { favObj => onAddFavProducts(favObj) }
                     />
                   )
                 }

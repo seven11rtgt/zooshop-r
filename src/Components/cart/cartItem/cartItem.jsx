@@ -1,6 +1,14 @@
+import axios from 'axios'
 import style from './cartItem.module.css'
 
-const CartItem = (props) => { 
+const CartItem = (props) => {
+    const onRemoveCartItem = (id) => {
+        // удаляем товар по id на фронте
+        props.setCartItems(currentItems => currentItems.filter(item => item.id !== id))
+        // удаляем товар по id на бэке
+        axios.delete(`https://6354294be64783fa82807083.mockapi.io/cart/${id}`)
+    }
+
     return(
         <div className={style.cart_item}>
             <img className={style.cart_img} src={props.img} alt={props.cart_title} />
@@ -11,7 +19,7 @@ const CartItem = (props) => {
                 <span className={style.cart_price}>{props.price} руб.</span>
             </h3>
 
-            <button className={style.close_btn}>X</button>
+            <button onClick={() => onRemoveCartItem(props.id)} className={style.close_btn}>X</button>
         </div>
     )
 }

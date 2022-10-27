@@ -112,18 +112,15 @@
   transition: all .2s ease-out;
 }
 
-/* .favBtn:hover{
-  transform: translateX(20px);
-} */
-
 .favActiveBtn{
-  border: 0;
+  border: 1px solid #001aff;
   border-radius: 10px;
   padding: 7px;
   font-size: 14px;
   text-align: start;
   width: fit-content;
   cursor: pointer;
-  background-color: rgb(38, 246, 38);
+  background-color: white;
+  color: #001aff;
   transition: all .2s ease-out;
 }

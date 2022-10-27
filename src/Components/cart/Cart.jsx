@@ -9,7 +9,7 @@ import style from "./cart.module.css"
 //let sumBeautified = sum.toString().replace(/(\d)(?=(\d\d\d)+([^\d]|$))/g, '$1 ')
 let sumBeautified = 0
 
-const Cart = (props) => {
+const  Cart = (props) => {
     return(
         <div className={style.overlay}>
             <div className={style.cart}>
@@ -18,22 +18,29 @@ const Cart = (props) => {
                 <button className={style.close_btn} onClick={ props.closeCart } >X</button>
             </div>
             
-            <div className={style.cart_list}>
-                {
-                    props.cartProducts.map(
-                        item => {
-                            return(
-                                <CartItem 
-                                    key={item.id}
-                                    title={item.title} 
-                                    price={item.price} 
-                                    img={item.img} 
-                                />
+            {
+                props.cartItems.length 
+                ?   <div className={style.cart_list}>
+                        {
+                            props.cartItems.map(
+                                item => {
+                                    return(
+                                        <CartItem 
+                                            key={item.id}
+                                            id={item.id}
+                                            title={item.title} 
+                                            price={item.price} 
+                                            img={item.img}
+                                            setCartItems={ props.setCartItems }
+                                            onRemoveCartItem={ props.onRemoveCartItem }
+                                        />
+                                    )
+                                }
                             )
                         }
-                    )
-                }
-            </div>
+                    </div> 
+                : <h2>Ваша корзина пуста</h2>
+            }
 
             <div className={style.total_price}>
                 <p className={style.total_price_text}>Итог: </p>

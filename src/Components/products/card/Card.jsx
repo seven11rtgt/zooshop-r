@@ -16,6 +16,12 @@ const Card = (props) =>{
   }
   
   const onClickFav = () => {
+    let title = props.title
+    let description = props.description
+    let price = props.price
+    let img = props.img
+
+    props.onFav({ title, description, price, img })
     setFavAdded(!favAdded)
   }
 
