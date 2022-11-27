@@ -1,29 +1,30 @@
 import style from './favCard.module.css'
 import { useState } from 'react'
 
-const FavCard = (props) =>{
+const FavCard = (props) => {
+
   const [ cartAdded, setCartAdded ] = useState(false)
-  const [ favAdded, setFavAdded ] = useState(true)
 
   const onClickPlus = () => {
+    let id = props.id
     let title = props.title
     let description = props.description
     let price = props.price
     let img = props.img
     
-    props.onPlus({ title, description, price, img })
+    props.onPlus({ id, title, description, price, img })
+
     setCartAdded(!cartAdded)
   }
   
   const onClickFav = () => {
-    props.onRemoveFavProducts(props.id)
-    // setFavAdded(!favAdded)
+    props.onFav(props.id)
   }
 
   return(
     <div className={style.productItem}>
 
-        <button className={ style.favActiveBtn } onClick={ onClickFav } >
+        <button className={ style.favBtnActive } onClick={ onClickFav } >
           Убрать из избранных
         </button>
         
@@ -33,10 +34,13 @@ const FavCard = (props) =>{
         <div className={style.price}>Цена</div>
 
         <div className={style.productPrice}>
-          <span>{props.price} ₽</span>
+          <span>{props.price} руб.</span>
 
-          <button className={cartAdded ? style.checkBtn : style.plusBtn} onClick={onClickPlus} >
-            <img src={cartAdded ? props.checkImg : props.plusImg} alt='addToCartImage' />
+          <button 
+            className={ cartAdded ? style.checkBtn : style.plusBtn } 
+            onClick={ onClickPlus } 
+          >
+            <img src={cartAdded ? props.checkImg : props.plusImg} alt='productImage' />
           </button>
         </div>
     </div>

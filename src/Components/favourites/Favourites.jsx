@@ -1,18 +1,21 @@
-import React from 'react'
+import { useContext } from 'react'
 import axios from 'axios'
 import style from './favourites.module.css'
 import FavCard from './favCard/FavCard'
+import { AppContext } from "../../App"
 
 const Favourites = (props) => {
 
+  const context = useContext(AppContext)
+
   const onAddToCart = (objCart) => {
-    axios.post('https://6354294be64783fa82807083.mockapi.io/cart', objCart)
-    props.setCartItems([...props.cartItems, objCart])
+    axios.post('http://localhost:3001/cart', objCart)
+    context.setCartItems([...context.cartItems, objCart])
   }
- 
-  const onRemoveFavProducts = (id) => {
-    axios.delete(`https://6354294be64783fa82807083.mockapi.io/favourites/${id}`)
-    props.setFavItems(currentFavItems => currentFavItems.filter(item => Number(item.id) !== Number(id)))
+
+  const onRemoveFav = (id) => {
+      axios.delete(`http://localhost:3001/favourites/${id}`)
+      context.setFavItems(prev => prev.filter(item => Number(item.id) !== Number(id)))
   }
 
   return(
@@ -22,21 +25,15 @@ const Favourites = (props) => {
 
       <div className={style.products}>
         {
-          props.favItems
-          .map(item => {
+          context.favItems.map((item, index) => {
             return(
               <FavCard 
-                key={item.id}
-                id={item.id}
-                title={item.title} 
-                description={item.description} 
-                price={item.price} 
-                img={item.img} 
-                plusImg='/img/plus.png'
-                checkImg='/img/check.png'
-                onPlus = { cartObj => onAddToCart(cartObj) }
-                onRemoveFavProducts = { id => onRemoveFavProducts(id) }
-              />
+              key={index}
+              {...item}
+
+              onPlus = { cartObj => onAddToCart(cartObj) }
+              onFav = { favObj => onRemoveFav(favObj) }
+            />
             )
           })
         }
