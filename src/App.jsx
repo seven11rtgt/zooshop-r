@@ -94,11 +94,11 @@ function App() {
       />
 
       <Routes>
-        <Route path='/favourites' element={
+        <Route path='/zooshop-r/favourites' element={
           <Favourites /> }
         />
 
-        <Route path='/' element={
+        <Route path='/zooshop-r' element={
           <Home 
             search={ search }
             setSearch={ setSearch }
