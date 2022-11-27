@@ -53,19 +53,6 @@
   background-color: white;
   border: 1px solid #9F9F9F;
   transition: all .1s ease-out;
-  animation: .3s addProductAnimation ease-out;
-}
-
-@keyframes addProductAnimation {
-  0% {
-    transform: scale(1)
-  }
-  50% {
-    transform: scale(1.1)
-  }
-  100% {
-    transform: scale(1)
-  }
 }
 
 .checkBtn{
@@ -77,19 +64,6 @@
   background-color: rgb(38, 246, 38);
   border: 1px solid rgb(38, 246, 38);
   transition: all .1s ease-out;
-  animation: .3s addProductAnimation1 ease-out;
-}
-
-@keyframes addProductAnimation1 {
-  0% {
-    transform: scale(1)
-  }
-  50% {
-    transform: scale(1.1)
-  }
-  100% {
-    transform: scale(1)
-  }
 }
 
 .plusBtn img,
@@ -112,7 +86,7 @@
   transition: all .2s ease-out;
 }
 
-.favActiveBtn{
+.favBtnActive{
   border: 1px solid #001aff;
   border-radius: 10px;
   padding: 7px;

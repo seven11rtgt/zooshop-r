@@ -40,7 +40,7 @@ const FavCard = (props) => {
             className={ cartAdded ? style.checkBtn : style.plusBtn } 
             onClick={ onClickPlus } 
           >
-            <img src={cartAdded ? props.checkImg : props.plusImg} alt='productImage' />
+            <img src={cartAdded ? '/img/check.png' : '/img/plus.png'} alt='productImage' />
           </button>
         </div>
     </div>

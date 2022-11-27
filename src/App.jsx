@@ -37,7 +37,7 @@ function App() {
         // товаров, добавленых в корзину
         const cartData = await axios.get('http://localhost:3001/cart')
         // товаров, добавленных в избранное
-        const favData = await axios.get('http://localhost:3001/favorites')
+        const favData = await axios.get('http://localhost:3001/favourites')
 
   
         setCartItems(cartData.data)
