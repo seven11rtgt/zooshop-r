@@ -50,7 +50,7 @@ const Card = (props) =>{
           style.checkBtn : style.plusBtn} onClick={onClickPlus}
         >
           <img src={context.hasThisItemInCart(props.myId) ? 
-            '/img/check.png' : '/img/plus.png'} alt="" />
+            '/zooshop-r/img/check.png' : '/zooshop-r/img/plus.png'} alt="" />
         </button>
       </div>
     </div>
