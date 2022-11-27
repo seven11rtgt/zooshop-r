@@ -14,9 +14,9 @@ const dates = {
 }
 
 const imgPaths = {
-  'p1': '/img/promo/promo1.webp',
-  'p2': '/img/promo/promo2.webp',
-  'p3': '/img/promo/promo3.webp'
+  'p1': '/zooshop-r/img/promo/promo1.webp',
+  'p2': '/zooshop-r/img/promo/promo2.webp',
+  'p3': '/zooshop-r/img/promo/promo3.webp'
 }
 
 const PromoSection = () => {

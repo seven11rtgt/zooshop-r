@@ -6,7 +6,7 @@ const Footer = () => {
   return(
     <footer>
       <div className={style.logo}>
-        <img src="/img/koshka.png" alt="logo-koshka" />
+        <img src="/zooshop-r/img/koshka.png" alt="logo-koshka" />
       </div>
 
       <div className={style.footerContent}>

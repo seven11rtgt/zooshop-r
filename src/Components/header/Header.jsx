@@ -9,11 +9,11 @@ const Header = (props) => {
       </h1>
 
       <nav>
-        <Link to='/'>
+        <Link to='/zooshop-r/'>
           <button className={style.navItem} >ГЛАВНАЯ</button>
         </Link>
 
-        <Link to='/favourites'>
+        <Link to='/zooshop-r/favourites'>
           <button className={style.navItem} >ИЗБРАННОЕ</button>
         </Link>
 

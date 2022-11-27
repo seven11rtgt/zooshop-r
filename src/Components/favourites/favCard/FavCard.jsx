@@ -50,7 +50,7 @@ const FavCard = (props) => {
             className={ context.hasThisItemInCart(props.myId) ? style.checkBtn : style.plusBtn } 
             onClick={ onClickPlus } 
           >
-            <img src={ context.hasThisItemInCart(props.myId) ? '/img/check.png' : '/img/plus.png'} alt='productImage' />
+            <img src={ context.hasThisItemInCart(props.myId) ? '/zooshop-r/img/check.png' : '/zooshop-r/img/plus.png'} alt='productImage' />
           </button>
         </div>
     </div>

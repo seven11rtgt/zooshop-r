@@ -4,7 +4,7 @@ const SearchBlock = (props) => {
   return (
     <div className={style.search}>
       <div className={style.searchBlock}>
-        <img src='/img/search.png' alt='search' />
+        <img src='/zooshop-r/img/search.png' alt='search' />
         <input placeholder='Поиск по товарам' onChange={ props.filter } />
       </div>
     </div>
