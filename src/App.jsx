@@ -51,15 +51,15 @@ function App() {
 
   const onRemoveCartItem = (id) => {
     axios.delete(`http://localhost:3001/cart/${id}`)
-    setCartItems((prev) => prev.filter(item => Number(item.id) !== Number(id)))
+    setCartItems(prev => prev.filter(item => Number(item.id) !== Number(id)))
   }
 
   const hasThisItemInCart = (id) => {
-    return cartItems.some((objCart) => objCart.id === id)
+    return cartItems.some(objCart => objCart.id === id)
   }
 
   const hasThisItemInFavs = (id) => {
-    return favItems.some((objFavorite) => objFavorite.id === id)
+    return favItems.some(objFavorite => objFavorite.id === id)
   }
 
   return (
@@ -116,7 +116,7 @@ function App() {
     </div>
 
     </AppContext.Provider>
-  );
+  )
 }
 
-export default App;
+export default App

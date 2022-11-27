@@ -1,9 +1,10 @@
+import { useContext } from 'react'
 import style from './card.module.css'
-import { useState } from 'react'
+import { AppContext } from "../../../App"
 
 const Card = (props) =>{
-  const [ cartAdded, setCartAdded ] = useState(false)
-  const [ favAdded, setFavAdded ] = useState(false)
+
+  const context = useContext(AppContext)
 
   const onClickPlus = () => {
     let id = props.id
@@ -13,7 +14,6 @@ const Card = (props) =>{
     let img = props.img
     
     props.onPlus({ id, title, description, price, img })
-    setCartAdded(!cartAdded)
   }
   
   const onClickFav = () => {
@@ -24,27 +24,33 @@ const Card = (props) =>{
     let img = props.img
 
     props.onFav({ id, title, description, price, img })
-    setFavAdded(!favAdded)
   }
 
   return(
     <div className={style.productItem}>
-        <button className={ favAdded ? style.favActiveBtn : style.favBtn } onClick={ onClickFav } >
-          { favAdded ? 'Добавлено' : 'Добавить' } в избранное
-        </button>
+
+      {
+        context.hasThisItemInFavs(props.id) === true ? 
+        <button className={style.favBtnActive} onClick={onClickFav} >Убрать из избранного</button>
+
+        : <button className={style.favBtn} onClick={onClickFav} >Добавить в избранное</button>
+      }
         
-        <img className={style.productImg} src={props.img} alt='productImage' />
-        <div className={style.productTitle}>{props.title}</div>
-        <div className={style.productDescription}>{props.description}</div>
-        <div className={style.price}>Цена</div>
+      <img className={style.productImg} src={props.img} alt={props.title} />
+      <div className={style.productTitle}>{props.title}</div>
+      <div className={style.productDescription}>{props.description}</div>
+      <div className={style.price}>Цена</div>
 
-        <div className={style.productPrice}>
-          <span>{props.price} ₽</span>
+      <div className={style.productPrice}>
+        <span>{props.price} руб.</span>
 
-          <button className={cartAdded ? style.checkBtn : style.plusBtn} onClick={onClickPlus} >
-            <img src={cartAdded ? props.checkImg : props.plusImg} alt='addToCartImage' />
-          </button>
-        </div>
+        <button className={context.hasThisItemInCart(props.id) ? 
+          style.checkBtn : style.plusBtn} onClick={onClickPlus}
+        >
+          <img src={context.hasThisItemInCart(props.id) ? 
+            '/img/check.png' : '/img/plus.png'} alt="" />
+        </button>
+      </div>
     </div>
   )
 }

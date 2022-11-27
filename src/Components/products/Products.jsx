@@ -5,73 +5,75 @@ import style from './products.module.css'
 
 const Products = (props) => {
 
-    const onAddToCart = async (objCart) => {
-      try{
-        if (props.cartItems.find(item => Number(item.id) === Number(objCart.id))) {
-          axios.delete(`https://6354294be64783fa82807083.mockapi.io/cart/${objCart.id}`)
-          props.setCartItems(currentItems => currentItems.filter(item => Number(item.id) !== Number(objCart.id)))
-          return
-        }
+  const onAddToCart = async (objCart) => {
+    try{
+      const findCartItem = props.cartItems.find(cartItem => cartItem.id === objCart.id)
+      
+      if (findCartItem) {
+        axios.delete(`http://localhost:3001/cart/${findCartItem.id}`)
 
-        const { data } = await axios.post('https://6354294be64783fa82807083.mockapi.io/cart', objCart)
+        props.setCartItems(prev => prev.filter(cartItem => cartItem.id !== objCart.id))
+
+      } else {
+        const { data } = await axios.post('http://localhost:3001/cart', objCart)
+
         props.setCartItems([...props.cartItems, data])
       }
-      catch{
-
-      }
     }
+    catch{
+      alert('Не удалось добавить товар в корзину')
+    }
+  }
 
-    const onAddFavProducts = async (objFav) => {
-      try{
-        if ( props.favItems.find(obj => Number(obj.id) === Number(objFav.id)) ) {
-          axios.delete(`https://6354294be64783fa82807083.mockapi.io/favourites/${objFav.id}`)
-          return
-        }
+  const onAddToFavs = async (objFav) => {
+    try{
+      const findFavItem = props.favItems.find(favItem => favItem.id === objFav.id)
 
-        const { data } = await axios.post('https://6354294be64783fa82807083.mockapi.io/favourites', objFav)
+      if (findFavItem) {
+        axios.delete(`http://localhost:3001/favourites/${findFavItem.id}`)
+
+        props.setFavItems(prev => prev.filter(favItems => favItems.id !== objFav.id))
+
+      } else {
+        const { data } = await axios.post('http://localhost:3001/favourites', objFav)
+
         props.setFavItems([...props.favItems, data])
       }
-      catch{
-        alert('Не удалось добавить товар в избранное :(')
-      }
     }
-
-    const onSearchInput = (e) => {
-      props.setSearch(e.target.value)
+    catch{
+      alert('Не удалось добавить товар в избранное :(')
     }
+  }
 
-    return(
-        <div className={style.productsSection}>
-          <SearchBlock filter={ onSearchInput } />
+  const onSearchInput = (e) => {
+    props.setSearch(e.target.value)
+  }
 
-          <h2>{ props.search ? `Поиск по запросу: ${props.search}` : 'Все товары' }</h2>
+  return(
+    <div className={style.productsSection}>
+        <SearchBlock filter={ onSearchInput } />
 
-          <div className={style.products}>
-            {
-              props.products
-              .filter(item => item.title.toLowerCase().includes(props.search.toLowerCase()))
-              .map(
-                item => {
-                  return(
-                    <Card 
-                      key={item.id}
-                      id={item.id}
-                      title={item.title} 
-                      description={item.description} 
-                      price={item.price} 
-                      img={item.img} 
-                      plusImg='/img/plus.png'
-                      checkImg='/img/check.png'
-                      onPlus = { cartObj => onAddToCart(cartObj) }
-                      onFav = { favObj => onAddFavProducts(favObj) }
-                    />
-                  )
-                }
-              )
-            }
-          </div>
-      </div>
-    )
+        <h2>{ props.search ? `Поиск по запросу: ${props.search}` : 'Все товары' }</h2>
+
+        <div className={style.products}>
+          {
+            props.products
+            .filter(item => item.title.toLowerCase().includes(props.search.toLowerCase()))
+            .map((obj, index) => {
+              return(
+                <Card 
+                  key={index}
+                  {...obj}
+
+                  onPlus = { cartObj => onAddToCart(cartObj) }
+                  onFav = { favObj => onAddToFavs(favObj) }
+                />
+              )}
+            )
+          }
+        </div>
+    </div>
+  )
 }
 
 export default Products
