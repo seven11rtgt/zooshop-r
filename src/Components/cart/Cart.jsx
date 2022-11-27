@@ -1,54 +1,46 @@
 import CartItem from "./cartItem/cartItem"
 import style from "./cart.module.css"
 
-/* let sum = prodList
-    .map(item => +item.price.replace(/\s/, ''))
-    .reduce((acc, curr) => acc + curr, 0) */
-
-// добавляем удаленные ранее пробелы в сумму
-//let sumBeautified = sum.toString().replace(/(\d)(?=(\d\d\d)+([^\d]|$))/g, '$1 ')
-let sumBeautified = 0
-
 const  Cart = (props) => {
     return(
         <div className={style.overlay}>
             <div className={style.cart}>
-            <div className={style.title_block}>
-                <h2>Корзина</h2>
-                <button className={style.close_btn} onClick={ props.closeCart } >X</button>
-            </div>
-            
-            {
-                props.cartItems.length 
-                ?   <div className={style.cart_list}>
+
+                <div className={style.titleBlock}>
+                    <h2>Корзина</h2>
+                    <button className={style.closeBtn} onClick={ props.closeCart } >X</button>
+                </div>
+                
+                {
+                    props.cartItems.length ?   
+                    <div className={style.cartList}>
                         {
-                            props.cartItems.map(
-                                item => {
-                                    return(
-                                        <CartItem 
-                                            key={item.id}
-                                            id={item.id}
-                                            title={item.title} 
-                                            price={item.price} 
-                                            img={item.img}
-                                            setCartItems={ props.setCartItems }
-                                            onRemoveCartItem={ props.onRemoveCartItem }
-                                        />
-                                    )
-                                }
-                            )
+                            props.cartItems.map((item, index) => {
+                                return(
+                                    <CartItem 
+                                        key={index}
+                                        id={item.id}
+                                        title={item.title} 
+                                        price={item.price} 
+                                        img={item.img}
+                                        onRemoveCartItem={ props.onRemoveCartItem }
+                                    />
+                                )
+                            })
                         }
                     </div> 
-                : <h2>Ваша корзина пуста</h2>
-            }
+                    : <h2>Ваша корзина пуста</h2>
+                }
 
-            <div className={style.total_price}>
-                <p className={style.total_price_text}>Итог: </p>
-                <p className={style.total_price_summ}>
-                    {sumBeautified} руб.
-                </p>
-                <button>Заказать</button>
-            </div>
+                <div className={style.totalPrice}>
+                    Итог : 
+                    <span className={style.totalPriceSum}>
+                        {props.totalSum} руб.
+                    </span>
+                </div>
+
+                
+                <button className={style.orderBtn}>Заказать</button>
 
             </div>
         </div>
