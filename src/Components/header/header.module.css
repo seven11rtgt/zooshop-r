@@ -1,0 +1,39 @@
+header{
+  display: grid;
+  grid-template-columns: 2fr 2fr min-content;
+  background-color: black;
+  padding: 20px 50px;
+  user-select: none;
+}
+
+.logo{
+  background: linear-gradient(43deg, #4158D0 0%, #C850C0 46%, #FFCC70 100%);
+  color: transparent;
+  background-clip: text;
+  margin: 0;
+}
+
+.logoMax{
+  font-size: 1.5em;
+}
+
+nav{
+  display: grid;
+  grid-template-columns: repeat(3, min-content);
+  justify-content: end;
+  align-items: center;
+  column-gap: 2.5em;
+}
+
+.navItem{
+  color: #001AFF;
+  font-weight: 700;
+  cursor: pointer;
+  background-color: black;
+  border: none;
+  font-size: 20px;
+}
+
+.navItem:hover{
+  color: white;
+} 

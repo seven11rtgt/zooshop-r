@@ -1,0 +1,17 @@
+.productsSection{
+  max-width: 1200px;
+  margin: 0 auto;
+  flex: 1;
+  padding: 30px 0 60px;
+}
+
+.productsSection h2{
+  text-align: center;
+}
+
+.products{
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  padding-top: 20px;
+  gap: 30px;
+}
