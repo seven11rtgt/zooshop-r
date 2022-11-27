@@ -45,6 +45,8 @@
 }
 
 .plusBtn{
+  width: 40px;
+  height: 40px;
   justify-self: end;
   border-radius: 10px;
   padding: 7px;
@@ -56,13 +58,15 @@
 }
 
 .checkBtn{
+  width: 40px;
+  height: 40px;
   justify-self: end;
   border-radius: 10px;
   padding: 7px;
   padding-bottom: 4px;
   cursor: pointer;
-  background-color: rgb(38, 246, 38);
-  border: 1px solid rgb(38, 246, 38);
+  background-color: rgba(38, 246, 38, 0.242);
+  border: none;
   transition: all .1s ease-out;
 }
 

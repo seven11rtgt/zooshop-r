@@ -8,14 +8,40 @@ const Favourites = (props) => {
 
   const context = useContext(AppContext)
 
-  const onAddToCart = (objCart) => {
-    axios.post('http://localhost:3001/cart', objCart)
-    context.setCartItems([...context.cartItems, objCart])
+  const onAddToCart = async (objCart) => {
+    try{
+      const findCartItem = context.cartItems.find(cartItem => cartItem.myId === objCart.myId)
+      
+      if (findCartItem) {
+        axios.delete(`https://6354294be64783fa82807083.mockapi.io/cart/${findCartItem.id}`)
+
+        context.setCartItems(prev => prev.filter(cartItem => cartItem.myId === objCart.myId))
+
+      } else {
+        const { data } = await axios.post('https://6354294be64783fa82807083.mockapi.io/cart', objCart)
+
+        context.setCartItems([...props.cartItems, data])
+      }
+    }
+    catch{
+      alert('Не удалось добавить товар в корзину')
+    }
   }
 
-  const onRemoveFav = (id) => {
-      axios.delete(`http://localhost:3001/favourites/${id}`)
-      context.setFavItems(prev => prev.filter(item => Number(item.id) !== Number(id)))
+  const onFavsClick = async (objFav) => {
+    try{
+      const findFavItem = context.favItems.find(favItem => favItem.myId === objFav.myId)
+
+      if (findFavItem) {
+        axios.delete(`https://6354294be64783fa82807083.mockapi.io/favourites/${findFavItem.id}`)
+
+        context.setFavItems(prev => prev.filter(favItems => favItems.myId !== objFav.myId))
+
+      } 
+    }
+    catch{
+      alert('Не удалось добавить товар в избранное :(')
+    }
   }
 
   return(
@@ -28,12 +54,12 @@ const Favourites = (props) => {
           context.favItems.map((item, index) => {
             return(
               <FavCard 
-              key={index}
-              {...item}
+                key={index}
+                {...item}
 
-              onPlus = { cartObj => onAddToCart(cartObj) }
-              onFav = { favObj => onRemoveFav(favObj) }
-            />
+                onPlus = { onAddToCart }
+                onFav = { onFavsClick }
+              />
             )
           })
         }

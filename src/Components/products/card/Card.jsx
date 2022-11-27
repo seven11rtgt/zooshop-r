@@ -8,29 +8,31 @@ const Card = (props) =>{
 
   const onClickPlus = () => {
     let id = props.id
+    let myId = props.myId
     let title = props.title
     let description = props.description
     let price = props.price
     let img = props.img
     
-    props.onPlus({ id, title, description, price, img })
+    props.onPlus({ id, myId, title, description, price, img })
   }
   
   const onClickFav = () => {
     let id = props.id
+    let myId = props.myId
     let title = props.title
     let description = props.description
     let price = props.price
     let img = props.img
 
-    props.onFav({ id, title, description, price, img })
+    props.onFav({ id, myId, title, description, price, img })
   }
 
   return(
     <div className={style.productItem}>
 
       {
-        context.hasThisItemInFavs(props.id) === true ? 
+        context.hasThisItemInFavs(props.myId) === true ? 
         <button className={style.favBtnActive} onClick={onClickFav} >Убрать из избранного</button>
 
         : <button className={style.favBtn} onClick={onClickFav} >Добавить в избранное</button>
@@ -44,10 +46,10 @@ const Card = (props) =>{
       <div className={style.productPrice}>
         <span>{props.price} руб.</span>
 
-        <button className={context.hasThisItemInCart(props.id) ? 
+        <button className={context.hasThisItemInCart(props.myId) ? 
           style.checkBtn : style.plusBtn} onClick={onClickPlus}
         >
-          <img src={context.hasThisItemInCart(props.id) ? 
+          <img src={context.hasThisItemInCart(props.myId) ? 
             '/img/check.png' : '/img/plus.png'} alt="" />
         </button>
       </div>

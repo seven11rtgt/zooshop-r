@@ -1,7 +1,11 @@
 import CartItem from "./cartItem/cartItem"
 import style from "./cart.module.css"
+import { useContext } from 'react'
+import { AppContext } from "../../App"
 
 const  Cart = (props) => {
+    const context = useContext(AppContext)
+
     return(
         <div className={style.overlay}>
             <div className={style.cart}>
@@ -12,17 +16,15 @@ const  Cart = (props) => {
                 </div>
                 
                 {
-                    props.cartItems.length ?   
+                    context.cartItems.length ?   
                     <div className={style.cartList}>
                         {
-                            props.cartItems.map((item, index) => {
+                            context.cartItems.map((item, index) => {
                                 return(
                                     <CartItem 
                                         key={index}
-                                        id={item.id}
-                                        title={item.title} 
-                                        price={item.price} 
-                                        img={item.img}
+                                        {...item}
+                                        
                                         onRemoveCartItem={ props.onRemoveCartItem }
                                     />
                                 )

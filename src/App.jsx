@@ -31,13 +31,14 @@ function App() {
 
     () => {
       async function axiosData() {
-        // загрузка с бэка...
-        // каталога товаров для отрисовки главной страницы
-        const productsData = await axios.get('http://localhost:3001/products')
+        /* загрузка с бэка...
+        каталога товаров для отрисовки главной страницы
+        http://localhost:3001/propducts - для локального json-сервера */
+        const productsData = await axios.get('https://6354294be64783fa82807083.mockapi.io/products')
         // товаров, добавленых в корзину
-        const cartData = await axios.get('http://localhost:3001/cart')
+        const cartData = await axios.get('https://6354294be64783fa82807083.mockapi.io/cart')
         // товаров, добавленных в избранное
-        const favData = await axios.get('http://localhost:3001/favourites')
+        const favData = await axios.get('https://6354294be64783fa82807083.mockapi.io/favourites')
 
   
         setCartItems(cartData.data)
@@ -49,17 +50,17 @@ function App() {
     }, []
   )
 
-  const onRemoveCartItem = (id) => {
-    axios.delete(`http://localhost:3001/cart/${id}`)
-    setCartItems(prev => prev.filter(item => Number(item.id) !== Number(id)))
+  const onRemoveCartItem = (myId, id) => {
+    axios.delete(`https://6354294be64783fa82807083.mockapi.io/cart/${id}`)
+    setCartItems(prev => prev.filter(item => item.myId !== myId))
   }
 
-  const hasThisItemInCart = (id) => {
-    return cartItems.some(objCart => objCart.id === id)
+  const hasThisItemInCart = (myId) => {
+    return cartItems.some(objCart => objCart.myId === myId)
   }
 
-  const hasThisItemInFavs = (id) => {
-    return favItems.some(objFavorite => objFavorite.id === id)
+  const hasThisItemInFavs = (myId) => {
+    return favItems.some(objFavorite => objFavorite.myId === myId)
   }
 
   return (
@@ -78,7 +79,6 @@ function App() {
 
       { isOpenCart ?
         <Cart 
-            cartItems={ cartItems }
             closeCart={ ()=> setCartOpen(false) } 
             onRemoveCartItem={ onRemoveCartItem }
             totalSum={      
@@ -100,13 +100,8 @@ function App() {
 
         <Route path='/' element={
           <Home 
-            products={ products }
-            cartItems={ cartItems }
-            setCartItems={ setCartItems }
             search={ search }
             setSearch={ setSearch }
-            favItems={ favItems }
-            setFavItems= { setFavItems }
           /> } 
         />
 

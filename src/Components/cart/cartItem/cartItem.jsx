@@ -1,6 +1,7 @@
 import style from './cartItem.module.css'
 
 const CartItem = (props) => {
+
     return(
         <div className={style.cartItem}>
             <img className={style.cartImg} src={props.img} alt={props.title} />
@@ -12,7 +13,7 @@ const CartItem = (props) => {
             </h3>
 
             <button 
-                onClick={() => props.onRemoveCartItem(props.id)} 
+                onClick={() => props.onRemoveCartItem(props.myId, props.id)} 
                 className={style.closeBtn}
             >X</button>
         </div>
