@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState, createContext } from 'react'
 import axios from 'axios'
 import { Route, Routes } from 'react-router-dom'
 import './App.css';
@@ -8,13 +8,13 @@ import Home from './Components/Home'
 import Footer from './Components/footer/Footer'
 import Favourites from './Components/favourites/Favourites'
 
-
+export const AppContext = createContext({})
 
 function App() {
   // стейт для хранения товаров на главной странице
   const [products, setProducts] = useState([])
   // стейт состояния корзины (открыто/закрыто)
-  const [cartOpened, setCartOpened] = useState(false)
+  const [isOpenCart, setCartOpen] = useState(false)
   // стейт для хранения товаров в корзине
   const [cartItems, setCartItems] = useState([])
   // стейт для поиска
@@ -30,41 +30,73 @@ function App() {
     }, [] */
 
     () => {
-      // загружаем с бэка каталог товаров для отрисовки на фронте (главная сайта)
-      axios.get('https://6354294be64783fa82807083.mockapi.io/products')
-      .then(res => setProducts(res.data))
-      // загружаем с бэка товары, добавленые в корзину, для отрисовки на фронте (корзина)
-      axios.get('https://6354294be64783fa82807083.mockapi.io/cart')
-      .then(res => setCartItems(res.data))
-      // загружаем с бэка товары, добавленные в избранное, для отрисовки на фронте
-      axios.get('https://6354294be64783fa82807083.mockapi.io/favourites')
-      .then(res => setFavItems(res.data))
+      async function axiosData() {
+        // загрузка с бэка...
+        // каталога товаров для отрисовки главной страницы
+        const productsData = await axios.get('http://localhost:3001/products')
+        // товаров, добавленых в корзину
+        const cartData = await axios.get('http://localhost:3001/cart')
+        // товаров, добавленных в избранное
+        const favData = await axios.get('http://localhost:3001/favorites')
+
+  
+        setCartItems(cartData.data)
+        setFavItems(favData.data)
+        setProducts(productsData.data)
+      }
+      axiosData()
+
     }, []
   )
 
+  const onRemoveCartItem = (id) => {
+    axios.delete(`http://localhost:3001/cart/${id}`)
+    setCartItems((prev) => prev.filter(item => Number(item.id) !== Number(id)))
+  }
+
+  const hasThisItemInCart = (id) => {
+    return cartItems.some((objCart) => objCart.id === id)
+  }
+
+  const hasThisItemInFavs = (id) => {
+    return favItems.some((objFavorite) => objFavorite.id === id)
+  }
 
   return (
+    <AppContext.Provider value = {{ 
+      products, 
+      setProducts,
+      cartItems,
+      setCartItems, 
+      favItems,
+      setFavItems,
+      hasThisItemInCart,
+      hasThisItemInFavs
+    }}>
+
     <div className="App">
 
-      { cartOpened 
-        ? <Cart 
+      { isOpenCart ?
+        <Cart 
             cartItems={ cartItems }
-            setCartItems={ setCartItems }
-            closeCart={ ()=> setCartOpened(false) } 
-          /> 
-        : null }
+            closeCart={ ()=> setCartOpen(false) } 
+            onRemoveCartItem={ onRemoveCartItem }
+            totalSum={      
+              cartItems.reduce((total, obj) => total + obj.price, 0)
+            }
+        /> 
+        : null 
+      }
 
-      <Header openCart={ () => setCartOpened(true) } />
+      <Header 
+        openCart={ () => setCartOpen(true) } 
+        cartItems={ cartItems } 
+      />
 
       <Routes>
         <Route path='/favourites' element={
-          <Favourites 
-            favItems={ favItems }
-            setFavItems={ setFavItems }
-            cartItems={ cartItems }
-            setCartItems={ setCartItems }
-          />
-        } />
+          <Favourites /> }
+        />
 
         <Route path='/' element={
           <Home 
@@ -75,13 +107,15 @@ function App() {
             setSearch={ setSearch }
             favItems={ favItems }
             setFavItems= { setFavItems }
-          />
-        } />
+          /> } 
+        />
 
       </Routes>
-      
+
       <Footer />
     </div>
+
+    </AppContext.Provider>
   );
 }
 
