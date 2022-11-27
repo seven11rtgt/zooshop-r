@@ -1,15 +1,15 @@
 {
   "files": {
     "main.css": "/zooshop-r/static/css/main.c04ac61a.css",
-    "main.js": "/zooshop-r/static/js/main.c7148bfa.js",
+    "main.js": "/zooshop-r/static/js/main.fe867020.js",
     "static/js/787.125d804c.chunk.js": "/zooshop-r/static/js/787.125d804c.chunk.js",
     "index.html": "/zooshop-r/index.html",
     "main.c04ac61a.css.map": "/zooshop-r/static/css/main.c04ac61a.css.map",
-    "main.c7148bfa.js.map": "/zooshop-r/static/js/main.c7148bfa.js.map",
+    "main.fe867020.js.map": "/zooshop-r/static/js/main.fe867020.js.map",
     "787.125d804c.chunk.js.map": "/zooshop-r/static/js/787.125d804c.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.c04ac61a.css",
-    "static/js/main.c7148bfa.js"
+    "static/js/main.fe867020.js"
   ]
 }
