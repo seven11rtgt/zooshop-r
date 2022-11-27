@@ -98,7 +98,7 @@ function App() {
           <Favourites /> }
         />
 
-        <Route path='/zooshop-r' element={
+        <Route path='/zooshop-r/' element={
           <Home 
             search={ search }
             setSearch={ setSearch }
